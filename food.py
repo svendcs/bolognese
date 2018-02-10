@@ -30,12 +30,16 @@ class Food:
 
     def update(self, dic):
         if 'carbs' in dic.keys() and dic['carbs'] is not None:
+            assert(isinstance(dic['carbs'], int))
             self.carbs = dic['carbs']
         if 'protein' in dic.keys() and dic['protein'] is not None:
+            assert(isinstance(dic['protein'], int))
             self.protein = dic['protein'] 
         if 'fat' in dic.keys() and dic['fat'] is not None:
+            assert(isinstance(dic['fat'], int))
             self.fat = dic['fat']
         if 'alcohol' in dic.keys() and dic['alcohol'] is not None:
+            assert(isinstance(dic['alcohol'], int))
             self.alcohol = dic['alcohol']
         if 'servings' in dic.keys() and dic['servings'] is not None:
             self.servings.update(dic['servings'])
