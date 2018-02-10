@@ -8,6 +8,9 @@ def update_dictionary(defaults, *dicts):
             if v is None:
                 continue
             if k in a:
-                a[k] = v
+                if isinstance(a[k], list):
+                    a[k].extend(v)
+                else:
+                    a[k] = v
     return a
 
