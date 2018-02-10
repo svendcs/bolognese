@@ -14,14 +14,11 @@ def edit_handle(args):
     food = Food(args.food)
     vargs = vars(args)
 
-    if not food.exists():
-        print("The food '{}' does not exist.".format(args.food), file=sys.stderr)
-        return
-
     if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None and args.servings is None:
         subprocess.call([constants.EDITOR, food.path()])
     else:
-        food.load()
+        if food.exists():
+            food.load()
         food.update(vargs)
         food.save()
 
