@@ -3,38 +3,27 @@ import os
 import sys
 import subprocess
 import yaml
+from food import Food
 from dictionary_helpers import update_dictionary
 
-defaults = {'carbs': 0, 'protein': 0, 'fat': 0, 'alcohol': 0, 'servings': []}
-
-def food_path(food):
-    return os.path.join(constants.FOOD_DIR, food + constants.EXTENSION)
-
 def root_handle(args):
-    for root, dirs, files in os.walk(constants.FOOD_DIR):
-        for f in files:
-            if root == constants.FOOD_DIR:
-                print(f)
-            else:
-                print(root[len(constants.FOOD_DIR)+1:] + '/' + f)
+    for f in Food.list():
+        print(f)
 
 def edit_handle(args):
-    path = food_path(args.food)
+    food = Food(args.food)
     vargs = vars(args)
 
-    if not os.path.isfile(path):
+    if not food.exists():
         print("The food '{}' does not exist.".format(args.food), file=sys.stderr)
         return
 
-    should_update = any(vargs[k] is not None for k in defaults.keys())
-    if should_update:
-        with open(constants.CONFIG_PATH, mode='r') as f:
-            a = yaml.safe_load(f) or {}
-        d = update_dictionary(defaults, a, vargs)
-        with open(constants.CONFIG_PATH, mode='w') as f:
-            yaml.dump(d, f, default_flow_style=False)
+    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None and args.servings is None:
+        subprocess.call([constants.EDITOR, food.path()])
     else:
-        subprocess.call([constants.EDITOR, constants.CONFIG_PATH])
+        food.load()
+        food.update(vargs)
+        food.save()
 
 def edit_register(parent):
     edit_parser = parent.add_parser('edit')
@@ -47,22 +36,18 @@ def edit_register(parent):
     edit_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
-    path = food_path(args.food)
+    food = Food(args.food)
     vargs = vars(args)
 
-    if os.path.exists(path):
+    if food.exists():
         print("The food '{}' already exists.".format(args.food), file=sys.stderr)
         return
 
-    should_update = any(vargs[k] is not None for k in defaults.keys())
-    if should_update:
-        with open(constants.CONFIG_PATH, mode='r') as f:
-            a = yaml.safe_load(f) or {}
-        d = update_dictionary(defaults, a, vargs)
-        with open(constants.CONFIG_PATH, mode='w') as f:
-            yaml.dump(d, f, default_flow_style=False)
+    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None and args.servings is None:
+        subprocess.call([constants.EDITOR, food.path()])
     else:
-        subprocess.call([constants.EDITOR, constants.CONFIG_PATH])
+        food.update(vargs)
+        food.save()
 
 def add_register(parent):
     add_parser = parent.add_parser('add')
@@ -84,12 +69,12 @@ def log_register(parent):
     log_parser.add_argument('amount', type=str, help='Set the number of foo')
 
 def remove_handle(args):
-    path = food_path(args.food)
+    food = Food(args.food)
 
-    if not os.path.isfile(path):
+    if not food.exists():
         print("The food '{}' does not exist.".format(args.food), file=sys.stderr)
     else:
-        os.remove(path)
+        food.remove()
 
 def remove_register(parent):
     remove_parser = parent.add_parser('remove')
