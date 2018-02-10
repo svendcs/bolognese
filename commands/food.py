@@ -81,11 +81,7 @@ def log_register(parent):
     log_parser = parent.add_parser('log')
     log_parser.set_defaults(func=log_handle)
     log_parser.add_argument('food', type=str, help='Set the number of foo')
-    log_parser.add_argument('--carbs', type=int, help='Set the number of foo')
-    log_parser.add_argument('--protein', type=int, help='Set the number of foo')
-    log_parser.add_argument('--fat', type=int, help='Set the number of foo')
-    log_parser.add_argument('--alcohol', type=int, help='Set the number of foo')
-    log_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    log_parser.add_argument('amount', type=str, help='Set the number of foo')
 
 def remove_handle(args):
     path = food_path(args.food)
@@ -106,12 +102,9 @@ def import_handle(args):
 def import_register(parent):
     import_parser = parent.add_parser('import')
     import_parser.set_defaults(func=import_handle)
+    import_parser.add_argument('database', type=str, help='Set the number of foo')
+    import_parser.add_argument('id', type=str, help='Set the number of foo')
     import_parser.add_argument('food', type=str, help='Set the number of foo')
-    import_parser.add_argument('--carbs', type=int, help='Set the number of foo')
-    import_parser.add_argument('--protein', type=int, help='Set the number of foo')
-    import_parser.add_argument('--fat', type=int, help='Set the number of foo')
-    import_parser.add_argument('--alcohol', type=int, help='Set the number of foo')
-    import_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def register(parent):
     parser = parent.add_parser('food', help='food help')
