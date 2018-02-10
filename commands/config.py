@@ -11,14 +11,13 @@ def handle(args):
     should_update = any(vargs[k] is not None for k in defaults.keys())
 
     if should_update:
-        path = os.path.join(constants.DIR, 'config.yaml')
-        with open(path, mode='r') as f:
+        with open(constants.CONFIG_PATH, mode='r') as f:
             a = yaml.safe_load(f) or {}
         d = update_dictionary(defaults, a, vargs)
-        with open(path, mode='w') as f:
+        with open(constants.CONFIG_PATH, mode='w') as f:
             yaml.dump(d, f, default_flow_style=False)
     else:
-        subprocess.call([constants.EDITOR, os.path.join(constants.DIR, 'config.yaml')])
+        subprocess.call([constants.EDITOR, constants.CONFIG_PATH])
 
 def register(subparsers):
     parser = subparsers.add_parser('config', help='config help')
