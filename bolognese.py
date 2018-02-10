@@ -4,6 +4,7 @@ import sys
 import constants
 import commands.config
 import commands.food
+import commands.meal
 
 def handle(args):
     print("Root handle")
@@ -20,6 +21,7 @@ subparsers = parser.add_subparsers(help='sub-command help')
 
 commands.config.register(subparsers)
 commands.food.register(subparsers)
+commands.meal.register(subparsers)
 parser.set_defaults(func=handle)
 
 args = parser.parse_args()
