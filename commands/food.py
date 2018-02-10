@@ -8,7 +8,7 @@ from dictionary_helpers import update_dictionary
 defaults = {'carbs': 0, 'protein': 0, 'fat': 0, 'alcohol': 0, 'servings': []}
 
 def food_path(food):
-    return os.path.join(constants.FOOD_DIR, food + '.yaml')
+    return os.path.join(constants.FOOD_DIR, food + constants.EXTENSION)
 
 def handle(args):
     print("List of foods")
