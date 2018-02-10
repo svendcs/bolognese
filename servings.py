@@ -34,3 +34,7 @@ class Servings:
 
         return res
 
+    def is_valid_serving(self, s):
+        unit, amount = self.__parse_rep(s)
+        return unit in self.rep
+
