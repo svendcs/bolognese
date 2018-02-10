@@ -12,7 +12,9 @@ class Servings:
         return m.group(2), int(m.group(1))
 
     def update(self, l):
+        assert(isinstance(l, list))
         for s in l:
+            assert(isinstance(s, str) or isinstance(s, int))
             unit, amount = self.__parse_rep(s)
             self.rep[unit] = amount
 
