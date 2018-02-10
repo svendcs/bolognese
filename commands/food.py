@@ -10,8 +10,13 @@ defaults = {'carbs': 0, 'protein': 0, 'fat': 0, 'alcohol': 0, 'servings': []}
 def food_path(food):
     return os.path.join(constants.FOOD_DIR, food + constants.EXTENSION)
 
-def handle(args):
-    print("List of foods")
+def root_handle(args):
+    for root, dirs, files in os.walk(constants.FOOD_DIR):
+        for f in files:
+            if root == constants.FOOD_DIR:
+                print(f)
+            else:
+                print(root[len(constants.FOOD_DIR)+1:] + '/' + f)
 
 def edit_handle(args):
     path = food_path(args.food)
@@ -110,7 +115,7 @@ def import_register(parent):
 
 def register(parent):
     parser = parent.add_parser('food', help='food help')
-    parser.set_defaults(func=handle)
+    parser.set_defaults(func=root_handle)
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)
