@@ -7,10 +7,6 @@ from meal import Meal
 from food import Food
 from dictionary_helpers import update_dictionary
 
-def meal_path(meal):
-    for f in Meal.list():
-        print(f)
-
 def root_handle(args):
     for root, dirs, files in os.walk(constants.MEALS_DIR):
         for f in files:
