@@ -48,7 +48,7 @@ def show_handle(args):
     diary = Diary(date)
     if diary.exists():
         diary.load()
-    print(diary.items)
+    print(diary.foodlist.items)
 
 def show_register(parent):
     parser = parent.add_parser('show')

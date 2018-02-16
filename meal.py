@@ -3,11 +3,12 @@ import constants
 import yaml
 import servings
 from servings import Servings
+from food_list import FoodList
 
 class Meal:
     def __init__(self, name):
         self.name = name
-        self.items = []
+        self.items = FoodList()
         self.servings = Servings()
 
     def list():
@@ -30,22 +31,13 @@ class Meal:
         if 'servings' in dic.keys() and dic['servings'] is not None:
             self.servings.update(dic['servings'])
         if 'items' in dic.keys():
-            assert(isinstance(dic['items'], list))
-            for item in dic['items']:
-                assert(isinstance(item, dict))
-                assert('servings' not in item or isinstance(item['servings'], str) or isinstance(item['servings'], int))
-
-                t = 'food' if 'food' in item else 'meal'
-                assert(t in item)
-                assert(isinstance(item[t], str))
-                self.items.append({t: item[t], 'servings': item['servings'] if 'servings' in item else 1})
-
+            self.foodlist.update(dic['items'])
 
     def add_food(self, food, servings):
-        self.items.append({'food': food, 'servings': servings})
+        self.foodlist.add_food(food, servings)
 
     def add_meal(self, meal, servings):
-        self.items.append({'meal': meal, 'servings': servings})
+        self.foodlist.add_meal(meal, servings)
 
     def load(self):
         with open(self.path(), mode='r') as f:
@@ -54,7 +46,7 @@ class Meal:
     def save(self):
         with open(self.path(), mode='w') as f:
             dic = {
-                'items': self.items,
+                'items': self.foodlist.items,
                 'servings': self.servings.to_list(),
             }
             yaml.dump(dic, f, default_flow_style=False)
