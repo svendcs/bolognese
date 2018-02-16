@@ -56,15 +56,6 @@ def add_register(parent):
     add_parser.add_argument('--alcohol', type=int, help='Set the number of foo')
     add_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
-def log_handle(args):
-    print("Log handler")
-
-def log_register(parent):
-    log_parser = parent.add_parser('log')
-    log_parser.set_defaults(func=log_handle)
-    log_parser.add_argument('food', type=str, help='Set the number of foo')
-    log_parser.add_argument('amount', type=str, help='Set the number of foo')
-
 def remove_handle(args):
     food = Food(args.food)
 
@@ -95,7 +86,6 @@ def register(parent):
 
     edit_register(subparsers)
     remove_register(subparsers)
-    log_register(subparsers)
     import_register(subparsers)
     add_register(subparsers)
 
