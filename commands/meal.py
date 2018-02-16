@@ -84,14 +84,35 @@ def add_food_register(parent):
     parser.add_argument('food', type=str, help='Set the number of foo')
     parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
 
-def log_handle(args):
-    print("Log handler")
+def add_meal_handle(args):
+    meal = Meal(args.meal)
+    submeal = Meal(args.submeal)
+    vargs = vars(args)
 
-def log_register(parent):
-    log_parser = parent.add_parser('log')
-    log_parser.set_defaults(func=log_handle)
-    log_parser.add_argument('meal', type=str, help='Set the number of foo')
-    log_parser.add_argument('amount', type=str, help='Set the number of foo')
+    if not meal.exists():
+        print("The meal '{}' does not exist.".format(args.meal), file=sys.stderr)
+        return
+
+    if not submeal.exists():
+        print("The meal '{}' does not exist.".format(args.submeal), file=sys.stderr)
+        return
+
+    submeal.load()
+
+    if not submeal.servings.is_valid_serving(args.serving):
+        print("The serving '{}' is not a valid serving for the given meal.".format(args.serving), file=sys.stderr)
+        return
+
+    meal.load()
+    meal.add_meal(args.submeal, args.serving)
+    meal.save()
+
+def add_meal_register(parent):
+    parser = parent.add_parser('add-meal')
+    parser.set_defaults(func=add_meal_handle)
+    parser.add_argument('meal', type=str, help='Set the number of foo')
+    parser.add_argument('submeal', type=str, help='Set the number of foo')
+    parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
 
 def register(parent):
     parser = parent.add_parser('meal', help='meal help')
@@ -99,8 +120,8 @@ def register(parent):
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)
-    log_register(subparsers)
     add_register(subparsers)
     add_food_register(subparsers)
+    add_meal_register(subparsers)
 
     # remove, add, edit, log
