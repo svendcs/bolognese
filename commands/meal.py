@@ -49,7 +49,7 @@ def add_handle(args):
         meal.save()
 
 def add_register(parent):
-    parser = parent.add_parser('edit')
+    parser = parent.add_parser('add')
     parser.set_defaults(func=add_handle)
     parser.add_argument('meal', type=str, help='Set the number of foo')
     parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
