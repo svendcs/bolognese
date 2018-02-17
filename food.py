@@ -3,13 +3,12 @@ import constants
 import yaml
 import servings
 from servings import Servings
+from nutrients import Nutrients
 
 class Food:
     def __init__(self, name):
         self.name = name
-        self.carbs = 0
-        self.protein = 0
-        self.fat = 0
+        self.nutrients = Nutrients()
         self.servings = Servings()
 
     def list():
@@ -31,16 +30,16 @@ class Food:
     def update(self, dic):
         if 'carbs' in dic.keys() and dic['carbs'] is not None:
             assert(isinstance(dic['carbs'], int))
-            self.carbs = dic['carbs']
+            self.nutrients.carbs = dic['carbs']
         if 'protein' in dic.keys() and dic['protein'] is not None:
             assert(isinstance(dic['protein'], int))
-            self.protein = dic['protein'] 
+            self.nutrients.protein = dic['protein']
         if 'fat' in dic.keys() and dic['fat'] is not None:
             assert(isinstance(dic['fat'], int))
-            self.fat = dic['fat']
+            self.nutrients.fat = dic['fat']
         if 'alcohol' in dic.keys() and dic['alcohol'] is not None:
             assert(isinstance(dic['alcohol'], int))
-            self.alcohol = dic['alcohol']
+            self.nutrients.alcohol = dic['alcohol']
         if 'servings' in dic.keys() and dic['servings'] is not None:
             self.servings.update(dic['servings'])
 
@@ -51,10 +50,10 @@ class Food:
     def save(self):
         with open(self.path(), mode='w') as f:
             dic = {
-                'carbs': self.carbs,
-                'protein': self.protein,
-                'fat': self.fat,
-                'alcohol': self.alcohol,
+                'carbs': self.nutrients.carbs,
+                'protein': self.nutrients.protein,
+                'fat': self.nutrients.fat,
+                'alcohol': self.nutrients.alcohol,
                 'servings': self.servings.to_list(),
             }
             yaml.dump(dic, f, default_flow_style=False)
