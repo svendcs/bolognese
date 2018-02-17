@@ -15,7 +15,7 @@ def get_totals(foodlist, foods = {}, meals = {}):
     total = Nutrients()
 
     for item in foodlist.items:
-        serving = item.serving if 'serving' in item else 1
+        serving = item['servings'] if 'servings' in item else 1
         if 'meal' in item:
             meal_name = item['meal']
             if meal_name not in meals:
@@ -25,7 +25,8 @@ def get_totals(foodlist, foods = {}, meals = {}):
                 meal.load()
             else:
                 meal = meals[meal_name]
-            child_total = meal.servings.get_factor(serving) * get_totals(meal.foodlist, foods, meals)
+            factor = meal.servings.get_factor(serving)
+            child_total = factor * get_totals(meal.foodlist, foods, meals)
         if 'food' in item:
             food_name = item['food']
             if food_name not in foods:
@@ -35,7 +36,8 @@ def get_totals(foodlist, foods = {}, meals = {}):
                 food.load()
             else:
                 food = foods[food_name]
-            child_total = food.servings.get_factor(serving) * food.nutrients
+            factor = food.servings.get_factor(serving)
+            child_total = factor * food.nutrients
         total = total + child_total
 
     return total
@@ -80,7 +82,7 @@ def show_handle(args):
         diary.load()
 
     totals = get_totals(diary.foodlist)
-    print(totals.carbs, totals.fat, totals.alcohol, totals.protein)
+    print(totals.carbs)
 
 def show_register(parent):
     parser = parent.add_parser('show')

@@ -23,3 +23,12 @@ class Nutrients:
         c.protein = k * self.protein
         c.alcohol = k * self.alcohol
         return c
+
+    @property
+    def kilocalories(self):
+        return self.carbs * 4 + self.fat * 7 + self.protein * 4 + self.alcohol * 9
+
+    @property
+    def kilojoule(self):
+        return self.carbs * 4 + self.fat * 7 + self.protein * 4 + self.alcohol * 9
+
