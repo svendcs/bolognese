@@ -8,7 +8,7 @@ from food_list import FoodList
 class Meal:
     def __init__(self, name):
         self.name = name
-        self.items = FoodList()
+        self.foodlist = FoodList()
         self.servings = Servings()
 
     def list():
