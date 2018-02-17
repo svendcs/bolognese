@@ -8,7 +8,37 @@ from datetime import date
 from meal import Meal
 from food import Food
 from diary import Diary
+from nutrients import Nutrients
 from dictionary_helpers import update_dictionary
+
+def get_totals(foodlist, foods = {}, meals = {}):
+    total = Nutrients()
+
+    for item in foodlist.items:
+        serving = item.serving if 'serving' in item else 1
+        if 'meal' in item:
+            meal_name = item['meal']
+            if meal_name not in meals:
+                meal = meals[meal_name] = Meal(meal_name)
+                if not meal.exists():
+                    raise KeyError("The meal '{}' does not exist".format(meal_name))
+                meal.load()
+            else:
+                meal = meals[meal_name]
+            child_total = meal.servings.get_factor(serving) * get_totals(meal.foodlist, foods, meals)
+        if 'food' in item:
+            food_name = item['food']
+            if food_name not in foods:
+                food = foods[food_name] = Food(food_name)
+                if not food.exists():
+                    raise KeyError("The food '{}' does not exist".format(food_name))
+                food.load()
+            else:
+                food = foods[food_name]
+            child_total = food.servings.get_factor(serving) * food.nutrients
+        total = total + child_total
+
+    return total
 
 def root_handle(args):
     pass
@@ -48,7 +78,9 @@ def show_handle(args):
     diary = Diary(date)
     if diary.exists():
         diary.load()
-    print(diary.foodlist.items)
+
+    totals = get_totals(diary.foodlist)
+    print(totals.carbs, totals.fat, totals.alcohol, totals.protein)
 
 def show_register(parent):
     parser = parent.add_parser('show')
