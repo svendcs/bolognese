@@ -34,9 +34,9 @@ class Nutrients:
 
     @property
     def kilocalories(self):
-        return self.carbs * 4 + self.fat * 7 + self.protein * 4 + self.alcohol * 9
+        return self.carbs * 4 + self.fat * 9 + self.protein * 4 + self.alcohol * 7
 
     @property
     def kilojoule(self):
-        return self.carbs * 4 + self.fat * 7 + self.protein * 4 + self.alcohol * 9
+        return self.carbs * 17 + self.fat * 37 + self.protein * 17 + self.alcohol * 29
 
