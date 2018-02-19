@@ -16,6 +16,14 @@ class Nutrients:
         c.protein = a.protein + b.protein
         return c
 
+    def __sub__(a, b):
+        c = Nutrients()
+        c.carbs = a.carbs - b.carbs
+        c.fat = a.fat - b.fat
+        c.alcohol = a.alcohol - b.alcohol
+        c.protein = a.protein - b.protein
+        return c
+
     def __rmul__(self, k):
         c = Nutrients()
         c.carbs = k * self.carbs
