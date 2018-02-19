@@ -10,6 +10,7 @@ from food import Food
 from diary import Diary
 from nutrients import Nutrients
 from dictionary_helpers import update_dictionary
+from config import Config
 
 def get_totals(foodlist, foods = {}, meals = {}):
     total = Nutrients()
@@ -81,8 +82,22 @@ def show_handle(args):
     if diary.exists():
         diary.load()
 
-    totals = get_totals(diary.foodlist)
-    print(totals.carbs)
+    config = Config()
+    if config.exists():
+        config.load()
+
+    current = get_totals(diary.foodlist)
+    goal = config.nutrients
+    left = goal - current
+
+    row_format = "{:>12}" * 4
+    print(row_format.format("", "current", "goal", "left"))
+    print(row_format.format("kcal", current.kilocalories, goal.kilocalories, left.kilocalories))
+    print(row_format.format("kj", current.kilojoule, goal.kilojoule, left.kilojoule))
+    print(row_format.format("carbs", current.carbs, goal.carbs, left.carbs))
+    print(row_format.format("protein", current.protein, goal.protein, left.protein))
+    print(row_format.format("fat", current.fat, goal.fat, left.fat))
+    print(row_format.format("alcohol", current.alcohol, goal.alcohol, left.alcohol))
 
 def show_register(parent):
     parser = parent.add_parser('show')
