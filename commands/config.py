@@ -3,21 +3,20 @@ import os
 import subprocess
 import yaml
 from dictionary_helpers import update_dictionary
+from config import Config
 
-defaults = {'carbs': 0, 'protein': 0, 'fat': 0, 'alcohol': 0}
 def handle(args):
     vargs = vars(args)
 
-    should_update = any(vargs[k] is not None for k in defaults.keys())
+    config = Config()
 
-    if should_update:
-        with open(constants.CONFIG_PATH, mode='r') as f:
-            a = yaml.safe_load(f) or {}
-        d = update_dictionary(defaults, a, vargs)
-        with open(constants.CONFIG_PATH, mode='w') as f:
-            yaml.dump(d, f, default_flow_style=False)
+    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None:
+        subprocess.call([constants.EDITOR, config.path()])
     else:
-        subprocess.call([constants.EDITOR, constants.CONFIG_PATH])
+        if config.exists():
+            config.load()
+        config.update(vargs)
+        config.save()
 
 def register(subparsers):
     parser = subparsers.add_parser('config', help='config help')
