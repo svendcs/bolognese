@@ -1,8 +1,8 @@
 import argparse
 import os
 import sys
-import constants
-from commands import food,config,meal,diary
+import bolognese.constants
+from bolognese.commands import food,config,meal,diary
 
 def __handle(args):
     print("Root handle")
