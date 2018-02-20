@@ -7,9 +7,9 @@ class Servings:
     def __parse_rep(self, s):
         if isinstance(s, int):
             return "", s
-        p = re.compile('(\d+)\s*([a-z]*)')
+        p = re.compile('(\d+(\.\d+)?)\s*([a-z]*)')
         m = p.search(s)
-        return m.group(2), int(m.group(1))
+        return m.group(3), float(m.group(1))
 
     def update(self, l):
         assert(isinstance(l, list))
