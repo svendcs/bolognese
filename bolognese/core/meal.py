@@ -1,8 +1,9 @@
 import os
-import constants
 import yaml
-from core.servings import Servings
-from core.food_list import FoodList
+
+from bolognese.constants import MEALS_DIR, EXTENSION
+from bolognese.core.servings import Servings
+from bolognese.core.food_list import FoodList
 
 class Meal:
     def __init__(self, name):
@@ -12,16 +13,16 @@ class Meal:
 
     def list():
         res = []
-        for root, dirs, files in os.walk(constants.MEALS_DIR):
+        for root, dirs, files in os.walk(MEALS_DIR):
             for f in files:
-                if root == constants.MEALS_DIR:
+                if root == MEALS_DIR:
                     res.append(f)
                 else:
-                    res.append(root[len(constants.MEALS_DIR)+1:] + '/' + f)
+                    res.append(root[len(MEALS_DIR)+1:] + '/' + f)
         return res
 
     def path(self):
-        return os.path.join(constants.MEALS_DIR, self.name + constants.EXTENSION)
+        return os.path.join(MEALS_DIR, self.name + EXTENSION)
     
     def exists(self):
         return os.path.isfile(self.path())

@@ -1,8 +1,9 @@
 import os
-import constants
 import yaml
+
+from bolognese.constants import DIARY_DIR, EXTENSION
 from datetime import date
-from core.food_list import FoodList
+from bolognese.core.food_list import FoodList
 
 class Diary:
     def __init__(self, date: date):
@@ -10,7 +11,7 @@ class Diary:
         self.foodlist = FoodList()
 
     def path(self):
-        return os.path.join(constants.DIARY_DIR, str(self.date) + constants.EXTENSION)
+        return os.path.join(DIARY_DIR, str(self.date) + EXTENSION)
 
     def exists(self):
         return os.path.isfile(self.path())

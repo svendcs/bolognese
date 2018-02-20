@@ -1,14 +1,15 @@
 import os
-import constants
 import yaml
-from core.nutrients import Nutrients
+
+from bolognese.constants import DIR, EXTENSION
+from bolognese.core.nutrients import Nutrients
 
 class Config:
     def __init__(self):
         self.nutrients = Nutrients()
 
     def path(self):
-        return os.path.join(constants.DIR, 'config' + constants.EXTENSION)
+        return os.path.join(DIR, 'config' + EXTENSION)
 
     def exists(self):
         return os.path.isfile(self.path())

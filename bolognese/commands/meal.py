@@ -1,9 +1,10 @@
-import constants
 import os
 import sys
 import subprocess
-from core.meal import Meal
-from core.food import Food
+
+from bolognese.constants import EDITOR
+from bolognese.core.meal import Meal
+from bolognese.core.food import Food
 
 def root_handle(args):
     for f in Meal.list():
@@ -14,7 +15,7 @@ def edit_handle(args):
     vargs = vars(args)
 
     if args.servings is None:
-        subprocess.call([constants.EDITOR, meal.path()])
+        subprocess.call([EDITOR, meal.path()])
     else:
         if meal.exists():
             meal.load()
@@ -36,7 +37,7 @@ def add_handle(args):
         return
 
     if args.servings is None:
-        subprocess.call([constants.EDITOR, meal.path()])
+        subprocess.call([EDITOR, meal.path()])
     else:
         meal.load()
         meal.update(vargs)

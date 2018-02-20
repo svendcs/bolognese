@@ -1,6 +1,7 @@
-import constants
 import subprocess
-from core.config import Config
+
+from bolognese.constants import EDITOR
+from bolognese.core.config import Config
 
 def handle(args):
     vargs = vars(args)
@@ -8,7 +9,7 @@ def handle(args):
     config = Config()
 
     if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None:
-        subprocess.call([constants.EDITOR, config.path()])
+        subprocess.call([EDITOR, config.path()])
     else:
         if config.exists():
             config.load()

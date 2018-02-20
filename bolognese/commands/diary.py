@@ -1,12 +1,14 @@
-import constants
 import sys
 import subprocess
+import re
 from datetime import date
-from core.meal import Meal
-from core.food import Food
-from core.diary import Diary
-from core.nutrients import Nutrients
-from core.config import Config
+
+from bolognese.constants import EDITOR
+from bolognese.core.meal import Meal
+from bolognese.core.food import Food
+from bolognese.core.diary import Diary
+from bolognese.core.nutrients import Nutrients
+from bolognese.core.config import Config
 
 def get_totals(foodlist, foods = {}, meals = {}):
     total = Nutrients()
@@ -62,7 +64,7 @@ def edit_handle(args):
         return
 
     diary = Diary(date)
-    subprocess.call([constants.EDITOR, diary.path()])
+    subprocess.call([EDITOR, diary.path()])
 
 def edit_register(parent):
     parser = parent.add_parser('edit')
