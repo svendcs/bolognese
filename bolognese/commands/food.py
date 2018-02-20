@@ -24,10 +24,10 @@ def edit_register(parent):
     edit_parser = parent.add_parser('edit')
     edit_parser.set_defaults(func=edit_handle)
     edit_parser.add_argument('food', type=str, help='Set the number of foo')
-    edit_parser.add_argument('--carbs', type=int, help='Set the number of foo')
-    edit_parser.add_argument('--protein', type=int, help='Set the number of foo')
-    edit_parser.add_argument('--fat', type=int, help='Set the number of foo')
-    edit_parser.add_argument('--alcohol', type=int, help='Set the number of foo')
+    edit_parser.add_argument('--carbs', type=float, help='Set the number of foo')
+    edit_parser.add_argument('--protein', type=float, help='Set the number of foo')
+    edit_parser.add_argument('--fat', type=float, help='Set the number of foo')
+    edit_parser.add_argument('--alcohol', type=float, help='Set the number of foo')
     edit_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
@@ -48,10 +48,10 @@ def add_register(parent):
     add_parser = parent.add_parser('add')
     add_parser.set_defaults(func=add_handle)
     add_parser.add_argument('food', type=str, help='Set the number of foo')
-    add_parser.add_argument('--carbs', type=int, help='Set the number of foo')
-    add_parser.add_argument('--protein', type=int, help='Set the number of foo')
-    add_parser.add_argument('--fat', type=int, help='Set the number of foo')
-    add_parser.add_argument('--alcohol', type=int, help='Set the number of foo')
+    add_parser.add_argument('--carbs', type=float, help='Set the number of foo')
+    add_parser.add_argument('--protein', type=float, help='Set the number of foo')
+    add_parser.add_argument('--fat', type=float, help='Set the number of foo')
+    add_parser.add_argument('--alcohol', type=float, help='Set the number of foo')
     add_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def remove_handle(args):

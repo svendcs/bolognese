@@ -18,9 +18,9 @@ def handle(args):
 
 def register(subparsers):
     parser = subparsers.add_parser('config', help='config help')
-    parser.add_argument('--carbs', type=int, help='Set the number of carbs')
-    parser.add_argument('--protein', type=int, help='Set the number of carbs')
-    parser.add_argument('--fat', type=int, help='Set the number of carbs')
-    parser.add_argument('--alcohol', type=int, help='Set the number of carbs')
+    parser.add_argument('--carbs', type=float, help='Set the number of carbs')
+    parser.add_argument('--protein', type=float, help='Set the number of carbs')
+    parser.add_argument('--fat', type=float, help='Set the number of carbs')
+    parser.add_argument('--alcohol', type=float, help='Set the number of carbs')
     parser.set_defaults(func=handle)
 
