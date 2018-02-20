@@ -5,12 +5,11 @@ import subprocess
 import yaml
 import re
 from datetime import date
-from meal import Meal
-from food import Food
-from diary import Diary
-from nutrients import Nutrients
-from dictionary_helpers import update_dictionary
-from config import Config
+from core.meal import Meal
+from core.food import Food
+from core.diary import Diary
+from core.nutrients import Nutrients
+from core.config import Config
 
 def get_totals(foodlist, foods = {}, meals = {}):
     total = Nutrients()

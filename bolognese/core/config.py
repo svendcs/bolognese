@@ -1,7 +1,7 @@
 import os
 import constants
 import yaml
-from nutrients import Nutrients
+from core.nutrients import Nutrients
 
 class Config:
     def __init__(self):

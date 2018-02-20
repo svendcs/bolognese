@@ -3,8 +3,7 @@ import os
 import sys
 import subprocess
 import yaml
-from food import Food
-from dictionary_helpers import update_dictionary
+from core.food import Food
 
 def root_handle(args):
     for f in Food.list():

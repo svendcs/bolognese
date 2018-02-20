@@ -1,9 +1,8 @@
 import os
 import constants
 import yaml
-import servings
-from servings import Servings
-from food_list import FoodList
+from core.servings import Servings
+from core.food_list import FoodList
 
 class Meal:
     def __init__(self, name):

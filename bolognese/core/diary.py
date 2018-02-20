@@ -2,7 +2,7 @@ import os
 import constants
 import yaml
 from datetime import date
-from food_list import FoodList
+from core.food_list import FoodList
 
 class Diary:
     def __init__(self, date: date):

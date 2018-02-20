@@ -2,8 +2,7 @@ import constants
 import os
 import subprocess
 import yaml
-from dictionary_helpers import update_dictionary
-from config import Config
+from core.config import Config
 
 def handle(args):
     vargs = vars(args)

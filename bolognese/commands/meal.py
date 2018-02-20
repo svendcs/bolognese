@@ -3,9 +3,8 @@ import os
 import sys
 import subprocess
 import yaml
-from meal import Meal
-from food import Food
-from dictionary_helpers import update_dictionary
+from core.meal import Meal
+from core.food import Food
 
 def root_handle(args):
     for root, dirs, files in os.walk(constants.MEALS_DIR):
