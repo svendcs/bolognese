@@ -96,4 +96,3 @@ def register(parent):
     import_register(subparsers)
     add_register(subparsers)
 
-    # remove, add, edit, log

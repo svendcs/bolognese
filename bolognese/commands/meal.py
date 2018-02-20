@@ -119,4 +119,3 @@ def register(parent):
     add_food_register(subparsers)
     add_meal_register(subparsers)
 
-    # remove, add, edit, log

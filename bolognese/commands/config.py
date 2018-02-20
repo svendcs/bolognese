@@ -23,3 +23,4 @@ def register(subparsers):
     parser.add_argument('--fat', type=int, help='Set the number of carbs')
     parser.add_argument('--alcohol', type=int, help='Set the number of carbs')
     parser.set_defaults(func=handle)
+
