@@ -2,17 +2,12 @@ import constants
 import os
 import sys
 import subprocess
-import yaml
 from core.meal import Meal
 from core.food import Food
 
 def root_handle(args):
-    for root, dirs, files in os.walk(constants.MEALS_DIR):
-        for f in files:
-            if root == constants.MEALS_DIR:
-                print(f)
-            else:
-                print(root[len(constants.MEALS_DIR)+1:] + '/' + f)
+    for f in Meal.list():
+        print(f)
 
 def edit_handle(args):
     meal = Meal(args.meal)

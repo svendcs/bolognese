@@ -1,6 +1,6 @@
 import os
 
-DIR = "/Users/svendcs/.bolognese/"
+DIR = os.path.expanduser("~/.config/bolognese")
 EXTENSION = '.yml'
 FOOD_DIR = os.path.join(DIR, 'food')
 MEALS_DIR = os.path.join(DIR, 'meals')

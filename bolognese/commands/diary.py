@@ -1,9 +1,6 @@
 import constants
-import os
 import sys
 import subprocess
-import yaml
-import re
 from datetime import date
 from core.meal import Meal
 from core.food import Food

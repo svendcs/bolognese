@@ -1,8 +1,6 @@
 import constants
-import os
 import sys
 import subprocess
-import yaml
 from core.food import Food
 
 def root_handle(args):
