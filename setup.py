@@ -43,7 +43,7 @@ setup(
 
     keywords='iifym dieting macros macronutrients calories kilojoule',
 
-    packages=('bolognese', 'bolognese.core', 'bolognese.commands'),
+    packages=('bolognese', 'bolognese.core', 'bolognese.commands', 'bolognese.databases'),
     install_requires=['pyyaml'],
 
     extras_require={  # Optional

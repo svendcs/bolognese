@@ -68,13 +68,22 @@ def remove_register(parent):
     remove_parser.add_argument('food', type=str, help='Set the number of foo')
 
 def import_handle(args):
-    print("Import handler")
+    food = Food(args.food)
+    if food.exists():
+        print("The food '{}' already exists.".format(args.food), file=sys.stderr)
+        return
+
+    if args.database == 'fooddata':
+        from bolognese.databases.fooddata import Fooddata
+        food = Fooddata.get_food(args.food, args.food_id)
+
+    food.save()
 
 def import_register(parent):
     import_parser = parent.add_parser('import')
     import_parser.set_defaults(func=import_handle)
-    import_parser.add_argument('database', type=str, help='Set the number of foo')
-    import_parser.add_argument('id', type=str, help='Set the number of foo')
+    import_parser.add_argument('database', type=str, choices=['fooddata'], help='Set the number of foo')
+    import_parser.add_argument('food_id', type=str, help='Set the number of foo')
     import_parser.add_argument('food', type=str, help='Set the number of foo')
 
 def register(parent):

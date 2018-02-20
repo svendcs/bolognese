@@ -11,6 +11,9 @@ class Food:
         self.nutrients = Nutrients()
         self.servings = Servings()
 
+    def __str__(self):
+        return "{}: {}".format(self.name, self.nutrients)
+
     def list():
         res = []
         for root, dirs, files in os.walk(FOOD_DIR):
