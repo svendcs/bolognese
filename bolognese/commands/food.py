@@ -3,6 +3,7 @@ import subprocess
 
 from bolognese.constants import EDITOR
 from bolognese.core.food import Food
+from bolognese.core.nutrients import Nutrients
 
 def root_handle(args):
     for f in Food.list():
@@ -12,7 +13,7 @@ def edit_handle(args):
     food = Food(args.food)
     vargs = vars(args)
 
-    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None and args.servings is None:
+    if all(vargs[nutr] is None for nutr in Nutrients.NUTRIENTS) and args.servings is None:
         subprocess.call([EDITOR, food.path()])
     else:
         if food.exists():
@@ -21,14 +22,12 @@ def edit_handle(args):
         food.save()
 
 def edit_register(parent):
-    edit_parser = parent.add_parser('edit')
-    edit_parser.set_defaults(func=edit_handle)
-    edit_parser.add_argument('food', type=str, help='Set the number of foo')
-    edit_parser.add_argument('--carbs', type=float, help='Set the number of foo')
-    edit_parser.add_argument('--protein', type=float, help='Set the number of foo')
-    edit_parser.add_argument('--fat', type=float, help='Set the number of foo')
-    edit_parser.add_argument('--alcohol', type=float, help='Set the number of foo')
-    edit_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser = parent.add_parser('edit')
+    parser.add_argument('food', type=str, help='Set the number of foo')
+    for nutr in Nutrients.NUTRIENTS:
+        parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
+    parser.set_defaults(func=edit_handle)
+    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
     food = Food(args.food)
@@ -48,11 +47,8 @@ def add_register(parent):
     add_parser = parent.add_parser('add')
     add_parser.set_defaults(func=add_handle)
     add_parser.add_argument('food', type=str, help='Set the number of foo')
-    add_parser.add_argument('--carbs', type=float, help='Set the number of foo')
-    add_parser.add_argument('--protein', type=float, help='Set the number of foo')
-    add_parser.add_argument('--fat', type=float, help='Set the number of foo')
-    add_parser.add_argument('--alcohol', type=float, help='Set the number of foo')
-    add_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    for nutr in Nutrients.NUTRIENTS:
+        parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
 
 def remove_handle(args):
     food = Food(args.food)

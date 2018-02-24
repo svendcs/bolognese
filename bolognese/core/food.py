@@ -31,18 +31,7 @@ class Food:
         return os.path.isfile(self.path())
 
     def update(self, dic):
-        if 'carbs' in dic.keys() and dic['carbs'] is not None:
-            assert(isinstance(dic['carbs'], int))
-            self.nutrients.carbs = dic['carbs']
-        if 'protein' in dic.keys() and dic['protein'] is not None:
-            assert(isinstance(dic['protein'], int))
-            self.nutrients.protein = dic['protein']
-        if 'fat' in dic.keys() and dic['fat'] is not None:
-            assert(isinstance(dic['fat'], int))
-            self.nutrients.fat = dic['fat']
-        if 'alcohol' in dic.keys() and dic['alcohol'] is not None:
-            assert(isinstance(dic['alcohol'], int))
-            self.nutrients.alcohol = dic['alcohol']
+        self.nutrients.update(dic)
         if 'servings' in dic.keys() and dic['servings'] is not None:
             self.servings.update(dic['servings'])
 
@@ -53,11 +42,8 @@ class Food:
     def save(self):
         with open(self.path(), mode='w') as f:
             dic = {
-                'carbs': self.nutrients.carbs,
-                'protein': self.nutrients.protein,
-                'fat': self.nutrients.fat,
-                'alcohol': self.nutrients.alcohol,
-                'servings': self.servings.to_list(),
+                'servings':  list(self.servings),
+                **self.nutrients.dic
             }
             yaml.dump(dic, f, default_flow_style=False)
 

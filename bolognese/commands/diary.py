@@ -88,14 +88,12 @@ def show_handle(args):
     goal = config.nutrients
     left = goal - current
 
-    row_format = "{:>12}" * 4
-    print(row_format.format("", "current", "goal", "left"))
+    row_format = "{:>15}" + "{:>12}" * 3
+    print(row_format.format("", "left", "current", "goal"))
     print(row_format.format("kcal", current.kilocalories, goal.kilocalories, left.kilocalories))
     print(row_format.format("kj", current.kilojoule, goal.kilojoule, left.kilojoule))
-    print(row_format.format("carbs", current.carbs, goal.carbs, left.carbs))
-    print(row_format.format("protein", current.protein, goal.protein, left.protein))
-    print(row_format.format("fat", current.fat, goal.fat, left.fat))
-    print(row_format.format("alcohol", current.alcohol, goal.alcohol, left.alcohol))
+    for nutr in Nutrients.NUTRIENTS:
+        print(row_format.format(nutr, left[nutr], current[nutr], goal[nutr]))
 
 def show_register(parent):
     parser = parent.add_parser('show')

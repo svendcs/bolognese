@@ -2,13 +2,13 @@ import subprocess
 
 from bolognese.constants import EDITOR
 from bolognese.core.config import Config
+from bolognese.core.nutrients import Nutrients
 
 def handle(args):
     vargs = vars(args)
-
     config = Config()
 
-    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None:
+    if all(vargs[nutr] is None for nutr in Nutrients.NUTRIENTS):
         subprocess.call([EDITOR, config.path()])
     else:
         if config.exists():
@@ -18,9 +18,7 @@ def handle(args):
 
 def register(subparsers):
     parser = subparsers.add_parser('config', help='config help')
-    parser.add_argument('--carbs', type=float, help='Set the number of carbs')
-    parser.add_argument('--protein', type=float, help='Set the number of carbs')
-    parser.add_argument('--fat', type=float, help='Set the number of carbs')
-    parser.add_argument('--alcohol', type=float, help='Set the number of carbs')
+    for nutr in Nutrients.NUTRIENTS:
+        parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
     parser.set_defaults(func=handle)
 
