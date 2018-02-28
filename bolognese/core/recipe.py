@@ -1,11 +1,11 @@
 import os
 import yaml
 
-from bolognese.constants import MEALS_DIR, EXTENSION
+from bolognese.constants import RECIPES_DIR, EXTENSION
 from bolognese.core.servings import Servings
 from bolognese.core.food_list import FoodList
 
-class Meal:
+class Recipe:
     def __init__(self, name):
         self.name = name
         self.foodlist = FoodList()
@@ -13,16 +13,16 @@ class Meal:
 
     def list():
         res = []
-        for root, dirs, files in os.walk(MEALS_DIR):
+        for root, dirs, files in os.walk(RECIPES_DIR):
             for f in files:
-                if root == MEALS_DIR:
+                if root == RECIPES_DIR:
                     res.append(f)
                 else:
-                    res.append(root[len(MEALS_DIR)+1:] + '/' + f)
+                    res.append(root[len(RECIPES_DIR)+1:] + '/' + f)
         return res
 
     def path(self):
-        return os.path.join(MEALS_DIR, self.name + EXTENSION)
+        return os.path.join(RECIPES_DIR, self.name + EXTENSION)
     
     def exists(self):
         return os.path.isfile(self.path())
@@ -36,8 +36,8 @@ class Meal:
     def add_food(self, food, servings):
         self.foodlist.add_food(food, servings)
 
-    def add_meal(self, meal, servings):
-        self.foodlist.add_meal(meal, servings)
+    def add_recipe(self, recipe, servings):
+        self.foodlist.add_recipe(recipe, servings)
 
     def load(self):
         with open(self.path(), mode='r') as f:

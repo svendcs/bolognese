@@ -2,13 +2,13 @@ import argparse
 import os
 import sys
 import bolognese.constants
-from bolognese.commands import food,config,meal,diary
+from bolognese.commands import food,config,recipe,diary
 
 def __handle(args):
     print("Root handle")
 
 def main():
-    for folder in ['', 'food', 'meals', 'diary']:
+    for folder in ['', 'food', 'recipes', 'diary']:
         p = os.path.join(constants.DIR, folder)
         if os.path.exists(p):
             if not os.path.isdir(p):
@@ -21,7 +21,7 @@ def main():
 
     config.register(subparsers)
     food.register(subparsers)
-    meal.register(subparsers)
+    recipe.register(subparsers)
     diary.register(subparsers)
     parser.set_defaults(func=__handle)
 

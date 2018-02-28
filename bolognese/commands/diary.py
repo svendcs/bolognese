@@ -4,28 +4,28 @@ import re
 from datetime import date
 
 from bolognese.constants import EDITOR
-from bolognese.core.meal import Meal
+from bolognese.core.recipe import Recipe
 from bolognese.core.food import Food
 from bolognese.core.diary import Diary
 from bolognese.core.nutrients import Nutrients
 from bolognese.core.config import Config
 
-def get_totals(foodlist, foods = {}, meals = {}):
+def get_totals(foodlist, foods = {}, recipes = {}):
     total = Nutrients()
 
     for item in foodlist.items:
         serving = item['servings'] if 'servings' in item else 1
-        if 'meal' in item:
-            meal_name = item['meal']
-            if meal_name not in meals:
-                meal = meals[meal_name] = Meal(meal_name)
-                if not meal.exists():
-                    raise KeyError("The meal '{}' does not exist".format(meal_name))
-                meal.load()
+        if 'recipe' in item:
+            recipe_name = item['recipe']
+            if recipe_name not in recipes:
+                recipe = recipes[recipe_name] = Recipe(recipe_name)
+                if not recipe.exists():
+                    raise KeyError("The recipe '{}' does not exist".format(recipe_name))
+                recipe.load()
             else:
-                meal = meals[meal_name]
-            factor = meal.servings.get_factor(serving)
-            child_total = factor * get_totals(meal.foodlist, foods, meals)
+                recipe = recipes[recipe_name]
+            factor = recipe.servings.get_factor(serving)
+            child_total = factor * get_totals(recipe.foodlist, foods, recipes)
         if 'food' in item:
             food_name = item['food']
             if food_name not in foods:
@@ -130,33 +130,33 @@ def add_food_register(parent):
     parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
     parser.add_argument('--date', type=str, default=str(date.today()), help='Set the number of foo')
 
-def add_meal_handle(args):
+def add_recipe_handle(args):
     date = parse_date(args.date)
     if date is None:
         return
 
     diary = Diary(date)
-    meal = Meal(args.meal)
+    recipe = Recipe(args.recipe)
 
-    if not meal.exists():
-        print("The meal '{}' does not exist.".format(args.meal), file=sys.stderr)
+    if not recipe.exists():
+        print("The recipe '{}' does not exist.".format(args.recipe), file=sys.stderr)
         return
 
-    meal.load()
-    if not meal.servings.is_valid_serving(args.serving):
-        print("The serving '{}' is not a valid serving for the given meal.".format(args.serving), file=sys.stderr)
+    recipe.load()
+    if not recipe.servings.is_valid_serving(args.serving):
+        print("The serving '{}' is not a valid serving for the given recipe.".format(args.serving), file=sys.stderr)
         return
 
     if diary.exists():
         diary.load()
 
-    diary.add_meal(args.meal, args.serving)
+    diary.add_recipe(args.recipe, args.serving)
     diary.save()
 
-def add_meal_register(parent):
-    parser = parent.add_parser('add-meal')
-    parser.set_defaults(func=add_meal_handle)
-    parser.add_argument('meal', type=str, help='Set the number of foo')
+def add_recipe_register(parent):
+    parser = parent.add_parser('add-recipe')
+    parser.set_defaults(func=add_recipe_handle)
+    parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
     parser.add_argument('--date', type=str, default=str(date.today()), help='Set the number of foo')
 
@@ -168,5 +168,5 @@ def register(parent):
     edit_register(subparsers)
     show_register(subparsers)
     add_food_register(subparsers)
-    add_meal_register(subparsers)
+    add_recipe_register(subparsers)
 

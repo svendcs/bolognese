@@ -19,8 +19,8 @@ class Diary:
     def add_food(self, food, servings):
         self.foodlist.add_food(food, servings)
 
-    def add_meal(self, meal, servings):
-        self.foodlist.add_meal(meal, servings)
+    def add_recipe(self, recipe, servings):
+        self.foodlist.add_recipe(recipe, servings)
 
     def update(self, items):
         assert(isinstance(items, list))
