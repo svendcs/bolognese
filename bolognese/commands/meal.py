@@ -37,9 +37,9 @@ def add_handle(args):
         return
 
     if args.servings is None:
+        meal.save()
         subprocess.call([EDITOR, meal.path()])
     else:
-        meal.load()
         meal.update(vargs)
         meal.save()
 
@@ -48,6 +48,19 @@ def add_register(parent):
     parser.set_defaults(func=add_handle)
     parser.add_argument('meal', type=str, help='Set the number of foo')
     parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+
+def remove_handle(args):
+    meal = Meal(args.meal)
+
+    if not meal.exists():
+        print("The meal '{}' does not exist.".format(args.meal), file=sys.stderr)
+    else:
+        meal.remove()
+
+def remove_register(parent):
+    remove_parser = parent.add_parser('remove')
+    remove_parser.set_defaults(func=remove_handle)
+    remove_parser.add_argument('meal', type=str, help='Set the number of foo')
 
 def add_food_handle(args):
     meal = Meal(args.meal)
@@ -116,6 +129,7 @@ def register(parent):
 
     edit_register(subparsers)
     add_register(subparsers)
+    remove_register(subparsers)
     add_food_register(subparsers)
     add_meal_register(subparsers)
 

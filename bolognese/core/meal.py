@@ -43,11 +43,14 @@ class Meal:
         with open(self.path(), mode='r') as f:
             self.update(yaml.safe_load(f) or {})
 
+    def remove(self):
+        os.remove(self.path())
+
     def save(self):
         with open(self.path(), mode='w') as f:
             dic = {
                 'items': self.foodlist.items,
-                'servings': self.servings.to_list(),
+                'servings': list(self.servings)
             }
             yaml.dump(dic, f, default_flow_style=False)
 
