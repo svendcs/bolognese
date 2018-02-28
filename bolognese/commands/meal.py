@@ -23,10 +23,10 @@ def edit_handle(args):
         meal.save()
 
 def edit_register(parent):
-    edit_parser = parent.add_parser('edit')
-    edit_parser.set_defaults(func=edit_handle)
-    edit_parser.add_argument('meal', type=str, help='Set the number of foo')
-    edit_parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser = parent.add_parser('edit')
+    parser.set_defaults(func=edit_handle)
+    parser.add_argument('meal', type=str, help='Set the number of foo')
+    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
     meal = Meal(args.meal)

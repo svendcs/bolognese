@@ -44,9 +44,9 @@ def add_handle(args):
         food.save()
 
 def add_register(parent):
-    add_parser = parent.add_parser('add')
-    add_parser.set_defaults(func=add_handle)
-    add_parser.add_argument('food', type=str, help='Set the number of foo')
+    parser = parent.add_parser('add')
+    parser.set_defaults(func=add_handle)
+    parser.add_argument('food', type=str, help='Set the number of foo')
     for nutr in Nutrients.NUTRIENTS:
         parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
 
@@ -64,21 +64,21 @@ def remove_register(parent):
     remove_parser.add_argument('food', type=str, help='Set the number of foo')
 
 def import_handle(args):
+    from bolognese.databases.fooddata import Fooddata
+
     food = Food(args.food)
     if food.exists():
         print("The food '{}' already exists.".format(args.food), file=sys.stderr)
         return
 
-    if args.database == 'fooddata':
-        from bolognese.databases.fooddata import Fooddata
-        food = Fooddata.get_food(args.food, args.food_id)
+    food = Fooddata.get_food(args.food, args.food_id)
 
     food.save()
 
 def import_register(parent):
     import_parser = parent.add_parser('import')
     import_parser.set_defaults(func=import_handle)
-    import_parser.add_argument('database', type=str, choices=['fooddata'], help='Set the number of foo')
+    # import_parser.add_argument('database', type=str, choices=['fooddata'], help='Set the number of foo')
     import_parser.add_argument('food_id', type=str, help='Set the number of foo')
     import_parser.add_argument('food', type=str, help='Set the number of foo')
 
