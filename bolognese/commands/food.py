@@ -37,7 +37,8 @@ def add_handle(args):
         print("The food '{}' already exists.".format(args.food), file=sys.stderr)
         return
 
-    if args.carbs is None and args.fat is None and args.protein is None and args.alcohol is None and args.servings is None:
+    if all(vargs[nutr] is None for nutr in Nutrients.NUTRIENTS) and args.servings is None:
+        food.save() # First create the new file
         subprocess.call([EDITOR, food.path()])
     else:
         food.update(vargs)
@@ -49,6 +50,7 @@ def add_register(parent):
     parser.add_argument('food', type=str, help='Set the number of foo')
     for nutr in Nutrients.NUTRIENTS:
         parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
+    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
 def remove_handle(args):
     food = Food(args.food)
