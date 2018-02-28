@@ -89,11 +89,11 @@ def show_handle(args):
     left = goal - current
 
     row_format = "{:>15}" + "{:>12}" * 3
-    print(row_format.format("", "left", "current", "goal"))
-    print(row_format.format("kcal", round(left.kilocalories), round(current.kilocalories), round(goal.kilocalories)))
-    print(row_format.format("kj", round(left.kilojoule), round(current.kilojoule), round(goal.kilojoule)))
+    print(row_format.format("", "current", "goal", "left"))
+    print(row_format.format("kcal", round(current.kilocalories), round(goal.kilocalories), round(left.kilocalories)))
+    print(row_format.format("kj", round(current.kilojoule), round(goal.kilojoule), round(left.kilojoule)))
     for nutr in Nutrients.NUTRIENTS:
-        print(row_format.format(nutr, round(left[nutr]), round(current[nutr]), round(goal[nutr])))
+        print(row_format.format(nutr, round(current[nutr]), round(goal[nutr]), round(left[nutr])))
 
 def show_register(parent):
     parser = parent.add_parser('show')
