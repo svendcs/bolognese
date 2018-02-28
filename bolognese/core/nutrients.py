@@ -9,6 +9,9 @@ class Nutrients:
     def items(self):
         return self.dic.items()
 
+    def __str__(self):
+        return str(self.dic)
+
     def __add__(a, b):
         c = Nutrients()
         for nutr in Nutrients.NUTRIENTS:
@@ -27,12 +30,12 @@ class Nutrients:
     def __setitem__(self, key, v:float):
         if not key in Nutrients.NUTRIENTS:
             raise KeyError()
-        return self.dic[key]
+        self.dic[key] = v
 
     def __rmul__(self, k):
         c = Nutrients()
-        for nutr in Nutrient.NUTRIENTS:
-            c[nutr] = s * b[nutr]
+        for nutr in Nutrients.NUTRIENTS:
+            c[nutr] = k * self.dic[nutr]
         return c
 
     def update(self, dic):
