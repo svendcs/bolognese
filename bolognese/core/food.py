@@ -1,5 +1,6 @@
 import os
 import yaml
+import copy
 
 from bolognese.constants import FOOD_DIR, EXTENSION
 from bolognese.core.servings import Servings
