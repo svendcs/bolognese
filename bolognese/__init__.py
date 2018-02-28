@@ -8,8 +8,7 @@ def __handle(args):
     print("Root handle")
 
 def main():
-    for folder in ['', 'food', 'recipes', 'diary']:
-        p = os.path.join(constants.DIR, folder)
+    for p in [constants.DIR, constants.FOOD_DIR, constants.RECIPES_DIR, constants.DIARY_DIR]:
         if os.path.exists(p):
             if not os.path.isdir(p):
                 print("The location '{}' is not a directory".format(p))
