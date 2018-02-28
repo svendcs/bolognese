@@ -14,12 +14,23 @@ class Fooddata:
     def get_food(food_name, food_id):
         r = requests.get(Fooddata.URL.format(food_id), headers = Fooddata.HEADERS)
         page = html.fromstring(r.content)
-        table = page.xpath('//table[@class="pure-table"][2]/tbody')[0]
 
         food = Food(food_name)
-        food.nutrients.protein = Fooddata.__get_attr(table, 3)
-        food.nutrients.carbs = Fooddata.__get_attr(table, 7)
-        food.nutrients.fat = Fooddata.__get_attr(table, 10)
-        food.nutrients.alcohol = Fooddata.__get_attr(table, 11)
+        food.servings.update(['100g'])
+
+        macro_table = page.xpath('//th[text()="Makronæringstoffer m.m."]/ancestor::table/tbody')[0]
+        food.nutrients['protein'] = Fooddata.__get_attr(macro_table, 4)
+        food.nutrients['carbs'] = Fooddata.__get_attr(macro_table, 7)
+        food.nutrients['sugar'] = Fooddata.__get_attr(macro_table, 8)
+        food.nutrients['fat'] = Fooddata.__get_attr(macro_table, 10)
+        food.nutrients['alcohol'] = Fooddata.__get_attr(macro_table, 11)
+        food.nutrients['fiber'] = Fooddata.__get_attr(macro_table, 9)
+
+        mineral_table = page.xpath('//th[text()="Mineraler og uorganisk"]/ancestor::table/tbody')[0]
+        food.nutrients['sodium'] = Fooddata.__get_attr(mineral_table, 1)
+
+        fat_table = page.xpath('//th[text()="Fedtsyrer, summer"]/ancestor::table/tbody')
+        food.nutrients['saturated_fat'] = Fooddata.__get_attr(fat_table[0], 0) if fat_table else 0
+        
         return food
 
