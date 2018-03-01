@@ -47,6 +47,7 @@ class Recipe:
         os.remove(self.path())
 
     def save(self):
+        os.makedirs(os.path.dirname(self.path()), exist_ok = True)
         with open(self.path(), mode='w') as f:
             dic = {
                 'items': self.foodlist.items,

@@ -40,6 +40,7 @@ class Food:
             self.update(yaml.safe_load(f) or {})
 
     def save(self):
+        os.makedirs(os.path.dirname(self.path()), exist_ok = True)
         with open(self.path(), mode='w') as f:
             dic = {
                 'servings':  list(self.servings),

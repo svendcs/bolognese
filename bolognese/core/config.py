@@ -22,6 +22,7 @@ class Config:
             self.update(yaml.safe_load(f) or {})
 
     def save(self):
+        os.makedirs(os.path.dirname(self.path()), exist_ok = True)
         with open(self.path(), mode='w') as f:
             yaml.dump(self.nutrients.dic, f, default_flow_style=False)
 
