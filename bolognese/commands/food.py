@@ -52,6 +52,49 @@ def add_register(parent):
         parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
     parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
+def copy_handle(args):
+    food = Food(args.food)
+    new_food = Food(args.new_name)
+
+    if not food.exists():
+        print("The food '{}' does not exist.".format(args.food), file=sys.stderr)
+        return
+
+    if new_food.exists():
+        print("The food '{}' already exists.".format(args.new_name), file=sys.stderr)
+        return
+
+    food.name = args.new_name
+    food.save()
+
+def copy_register(parent):
+    remove_parser = parent.add_parser('copy')
+    remove_parser.set_defaults(func=copy_handle)
+    remove_parser.add_argument('food', type=str, help='Set the number of foo')
+    remove_parser.add_argument('new_name', type=str, help='Set the number of foo')
+
+def move_handle(args):
+    food = Food(args.food)
+    new_food = Food(args.new_name)
+
+    if not food.exists():
+        print("The food '{}' does not exist.".format(args.food), file=sys.stderr)
+        return
+
+    if new_food.exists():
+        print("The food '{}' already exists.".format(args.new_name), file=sys.stderr)
+        return
+
+    food.remove()
+    food.name = args.new_name
+    food.save()
+
+def move_register(parent):
+    remove_parser = parent.add_parser('move')
+    remove_parser.set_defaults(func=move_handle)
+    remove_parser.add_argument('food', type=str, help='Set the number of foo')
+    remove_parser.add_argument('new_name', type=str, help='Set the number of foo')
+
 def remove_handle(args):
     food = Food(args.food)
 
@@ -90,6 +133,8 @@ def register(parent):
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)
+    copy_register(subparsers)
+    move_register(subparsers)
     remove_register(subparsers)
     import_register(subparsers)
     add_register(subparsers)

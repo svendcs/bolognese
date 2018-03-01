@@ -49,6 +49,49 @@ def add_register(parent):
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
 
+def copy_handle(args):
+    recipe = Recipe(args.recipe)
+    new_recipe = Recipe(args.new_name)
+
+    if not recipe.exists():
+        print("The recipe '{}' does not exist.".format(args.recipe), file=sys.stderr)
+        return
+
+    if new_recipe.exists():
+        print("The recipe '{}' already exists.".format(args.new_name), file=sys.stderr)
+        return
+
+    recipe.name = args.new_name
+    recipe.save()
+
+def copy_register(parent):
+    remove_parser = parent.add_parser('copy')
+    remove_parser.set_defaults(func=copy_handle)
+    remove_parser.add_argument('recipe', type=str, help='Set the number of foo')
+    remove_parser.add_argument('new_name', type=str, help='Set the number of foo')
+
+def move_handle(args):
+    recipe = Recipe(args.recipe)
+    new_recipe = Recipe(args.new_name)
+
+    if not recipe.exists():
+        print("The recipe '{}' does not exist.".format(args.recipe), file=sys.stderr)
+        return
+
+    if new_recipe.exists():
+        print("The recipe '{}' already exists.".format(args.new_name), file=sys.stderr)
+        return
+
+    recipe.remove()
+    recipe.name = args.new_name
+    recipe.save()
+
+def move_register(parent):
+    remove_parser = parent.add_parser('move')
+    remove_parser.set_defaults(func=move_handle)
+    remove_parser.add_argument('recipe', type=str, help='Set the number of foo')
+    remove_parser.add_argument('new_name', type=str, help='Set the number of foo')
+
 def remove_handle(args):
     recipe = Recipe(args.recipe)
 
@@ -129,6 +172,8 @@ def register(parent):
 
     edit_register(subparsers)
     add_register(subparsers)
+    copy_register(subparsers)
+    move_register(subparsers)
     remove_register(subparsers)
     add_food_register(subparsers)
     add_recipe_register(subparsers)
