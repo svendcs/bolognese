@@ -4,6 +4,7 @@ import yaml
 from bolognese.constants import DIARY_DIR, EXTENSION
 from datetime import date
 from bolognese.core.food_list import FoodList
+from bolognese.core.servings import Servings
 
 class Diary:
     def __init__(self, date: date):
@@ -17,10 +18,20 @@ class Diary:
         return os.path.isfile(self.path())
 
     def add_food(self, food, servings):
-        self.foodlist.add_food(food, servings)
+        self.foodlist.add_food(food.name, servings)
 
-    def add_recipe(self, recipe, servings):
-        self.foodlist.add_recipe(recipe, servings)
+    def add_recipe(self, recipe, servings, recursive = False):
+        if not recursive:
+            self.foodlist.add_recipe(recipe.name, servings)
+        else:
+            factor = recipe.servings.get_factor(servings)
+            for item in recipe.foodlist.items:
+                serving = item['servings'] if 'servings' in item else 1
+                new_serving = Servings.apply_factor(serving, factor)
+                if 'food' in item:
+                    self.foodlist.add_food(item['food'], new_serving)
+                else:
+                    self.foodlist.add_recipe(item['recipe'], new_serving)
 
     def update(self, items):
         assert(isinstance(items, list))

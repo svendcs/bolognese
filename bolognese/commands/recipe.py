@@ -125,7 +125,7 @@ def add_food_handle(args):
         return
 
     recipe.load()
-    recipe.add_food(args.food, args.serving)
+    recipe.add_food(food, args.serving)
     recipe.save()
 
 def add_food_register(parent):
@@ -155,7 +155,7 @@ def add_recipe_handle(args):
         return
 
     recipe.load()
-    recipe.add_recipe(args.subrecipe, args.serving)
+    recipe.add_recipe(subrecipe, args.serving)
     recipe.save()
 
 def add_recipe_register(parent):

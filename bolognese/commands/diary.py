@@ -120,7 +120,7 @@ def add_food_handle(args):
     if diary.exists():
         diary.load()
 
-    diary.add_food(args.food, args.serving)
+    diary.add_food(food, args.serving)
     diary.save()
 
 def add_food_register(parent):
@@ -150,7 +150,7 @@ def add_recipe_handle(args):
     if diary.exists():
         diary.load()
 
-    diary.add_recipe(args.recipe, args.serving)
+    diary.add_recipe(recipe, args.serving, recursive = args.recursive)
     diary.save()
 
 def add_recipe_register(parent):
@@ -159,6 +159,7 @@ def add_recipe_register(parent):
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
     parser.add_argument('--date', type=str, default=str(date.today()), help='Set the number of foo')
+    parser.add_argument('--recursive', action='store_true', help='Set the number of foo')
 
 def register(parent):
     parser = parent.add_parser('diary', help='diary help')
