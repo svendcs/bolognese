@@ -31,6 +31,6 @@ class Fooddata:
 
         fat_table = page.xpath('//th[text()="Fedtsyrer, summer"]/ancestor::table/tbody')
         food.nutrients['saturated_fat'] = Fooddata.__get_attr(fat_table[0], 0) if fat_table else 0
-        
+
         return food
 
