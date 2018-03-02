@@ -16,14 +16,15 @@ class Recipe:
         for root, dirs, files in os.walk(RECIPES_DIR):
             for f in files:
                 if root == RECIPES_DIR:
-                    res.append(f)
+                    p = f
                 else:
-                    res.append(root[len(RECIPES_DIR)+1:] + '/' + f)
+                    p = root[len(RECIPES_DIR)+1:] + '/' + f
+                res.append(os.path.splitext(p)[0])
         return res
 
     def path(self):
         return os.path.join(RECIPES_DIR, self.name + EXTENSION)
-    
+
     def exists(self):
         return os.path.isfile(self.path())
 
