@@ -82,6 +82,7 @@ def move_handle(args):
         print("The recipe '{}' already exists.".format(args.new_name), file=sys.stderr)
         return
 
+    recipe.load()
     recipe.remove()
     recipe.name = args.new_name
     recipe.save()
