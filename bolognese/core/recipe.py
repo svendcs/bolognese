@@ -54,5 +54,5 @@ class Recipe:
                 'items': self.foodlist.items,
                 'servings': list(self.servings)
             }
-            yaml.dump(dic, f, default_flow_style=False)
+            yaml.dump(dic, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
 

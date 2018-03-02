@@ -48,7 +48,7 @@ class Food:
                 'servings':  list(self.servings),
                 **self.nutrients.dic
             }
-            yaml.dump(dic, f, default_flow_style=False)
+            yaml.dump(dic, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
 
     def remove(self):
         os.remove(self.path())

@@ -43,4 +43,4 @@ class Diary:
 
     def save(self):
         with open(self.path(), mode='w') as f:
-            yaml.dump(self.foodlist.items, f, default_flow_style=False)
+            yaml.dump(self.foodlist.items, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
