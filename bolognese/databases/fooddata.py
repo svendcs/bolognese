@@ -22,9 +22,9 @@ class Fooddata:
         food.nutrients['protein'] = Fooddata.__get_attr(macro_table, 4)
         food.nutrients['carbs'] = Fooddata.__get_attr(macro_table, 7)
         food.nutrients['sugar'] = Fooddata.__get_attr(macro_table, 8)
+        food.nutrients['fiber'] = Fooddata.__get_attr(macro_table, 9)
         food.nutrients['fat'] = Fooddata.__get_attr(macro_table, 10)
         food.nutrients['alcohol'] = Fooddata.__get_attr(macro_table, 11)
-        food.nutrients['fiber'] = Fooddata.__get_attr(macro_table, 9)
 
         mineral_table = page.xpath('//th[text()="Mineraler og uorganisk"]/ancestor::table/tbody')[0]
         food.nutrients['sodium'] = Fooddata.__get_attr(mineral_table, 1)
