@@ -64,6 +64,7 @@ def copy_handle(args):
         print("The food '{}' already exists.".format(args.new_name), file=sys.stderr)
         return
 
+    food.load()
     food.name = args.new_name
     food.save()
 
