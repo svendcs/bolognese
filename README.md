@@ -8,11 +8,11 @@ TODO
 
 Configuration
 -------------
-Bolognese stores all food diaries, recipes, foods and configuration in `json`-format in the `$HOME/.config/bolognese` directory. All files can be managed using the `bolognese` command, but can also be edited manually.
+Bolognese stores all food diaries, recipes, foods and configuration in `yaml`-format in the `$HOME/.config/bolognese` directory. All files can be managed using the `bolognese` command, but can also be edited manually.
 
 ### Foods
 Foods are stored in the `$HOME/.config/bolognese/food` directory. Each file contains nutritional information for one food item as well as serving sizes. If, for example, `100g` is listed as a serving, then `100g` of that item corresponds to the nutritional information listed. The following example shows the nutritional information for an orange.
-```
+```yaml
 alcohol: 0.0
 carbs: 10.4
 fat: 0.0
@@ -28,7 +28,7 @@ sugar: 0.0
 
 ### Recipes
 Recipes are stored in the `$HOME/.config/bolognese/recipes` directory. Each file contains information for one recipe as well as the serving sizes. The following example shows the information my usual breakfast. Recipes can also include other recipes recursively.
-```
+```yaml
 items:
 - food: generic/oats
   serving: 100g
@@ -42,7 +42,7 @@ servings:
 
 ### Nutritional Goals
 The nutritional goals are stored in the `$HOME/.config/bolognese/config.yml` directory.
-```
+```yaml
 alcohol: 0.0
 carbs: 400
 fat: 89.0
@@ -55,7 +55,7 @@ sugar: 95
 
 ### Food diaries
 The daily food diaries are stored in the `$HOME/.config/bolognese/config.yml` directory and contains all foods and recipes for each day. The following is a snippet of a day.
-```
+```yaml
 - food: generic/granny-smith-apple
   servings: '1'
 - recipe: breakfast
