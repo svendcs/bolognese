@@ -255,7 +255,7 @@ function _bolognese_diary_add_recipe {
     _arguments \
         "-h" \
         "--help" \
-        "1: :($foods)" \
+        "1: :($recipes)" \
         "2: " \
         "--date"
 }
