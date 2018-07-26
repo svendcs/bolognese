@@ -9,12 +9,13 @@ from bolognese.core.food import Food
 from bolognese.core.diary import Diary
 from bolognese.core.nutrients import Nutrients
 from bolognese.core.config import Config
+from bolognese.core.serving import Serving
 
 def get_totals(foodlist, foods = {}, recipes = {}):
     total = Nutrients()
 
     for item in foodlist.items:
-        serving = item['servings'] if 'servings' in item else 1
+        serving = Serving.from_string(item['serving'] if 'serving' in item else '1')
         if 'recipe' in item:
             recipe_name = item['recipe']
             if recipe_name not in recipes:
@@ -84,7 +85,7 @@ def show_handle(args):
     if config.exists():
         config.load()
 
-    current = get_totals(diary.foodlist)
+    current = get_totals(diary.food_list)
     goal = config.nutrients
     left = goal - current
 
@@ -113,14 +114,16 @@ def add_food_handle(args):
         return
 
     food.load()
-    if not food.servings.is_valid_serving(args.serving):
+
+    serving = Serving.from_string(args.serving)
+    if not food.servings.compatible(serving):
         print("The serving '{}' is not a valid serving for the given food.".format(args.serving), file=sys.stderr)
         return
 
     if diary.exists():
         diary.load()
 
-    diary.add_food(food, args.serving)
+    diary.add_food(food, serving)
     diary.save()
 
 def add_food_register(parent):
@@ -143,14 +146,16 @@ def add_recipe_handle(args):
         return
 
     recipe.load()
-    if not recipe.servings.is_valid_serving(args.serving):
+
+    serving = Serving.from_string(args.serving)
+    if not recipe.servings.compatible(serving):
         print("The serving '{}' is not a valid serving for the given recipe.".format(args.serving), file=sys.stderr)
         return
 
     if diary.exists():
         diary.load()
 
-    diary.add_recipe(recipe, args.serving, recursive = args.recursive)
+    diary.add_recipe(recipe, serving, recursive = args.recursive)
     diary.save()
 
 def add_recipe_register(parent):

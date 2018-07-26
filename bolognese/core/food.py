@@ -2,14 +2,15 @@ import os
 import yaml
 
 from bolognese.constants import FOOD_DIR, EXTENSION
-from bolognese.core.servings import Servings
+from bolognese.core.serving import Serving
+from bolognese.core.serving_list import ServingList
 from bolognese.core.nutrients import Nutrients
 
 class Food:
     def __init__(self, name):
         self.name = name
         self.nutrients = Nutrients()
-        self.servings = Servings()
+        self.servings = ServingList()
 
     def __str__(self):
         return "{}: {}".format(self.name, self.nutrients)
@@ -45,7 +46,7 @@ class Food:
         os.makedirs(os.path.dirname(self.path()), exist_ok = True)
         with open(self.path(), mode='w') as f:
             dic = {
-                'servings':  list(self.servings),
+                'servings':  list(map(str, self.servings)),
                 **self.nutrients.dic
             }
             yaml.dump(dic, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)

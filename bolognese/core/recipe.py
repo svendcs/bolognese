@@ -2,14 +2,15 @@ import os
 import yaml
 
 from bolognese.constants import RECIPES_DIR, EXTENSION
-from bolognese.core.servings import Servings
+from bolognese.core.serving import Serving
+from bolognese.core.serving_list import ServingList
 from bolognese.core.food_list import FoodList
 
 class Recipe:
     def __init__(self, name):
         self.name = name
-        self.foodlist = FoodList()
-        self.servings = Servings()
+        self.food_list = FoodList()
+        self.servings = ServingList()
 
     def list():
         res = []
@@ -32,13 +33,13 @@ class Recipe:
         if 'servings' in dic.keys() and dic['servings'] is not None:
             self.servings.update(dic['servings'])
         if 'items' in dic.keys():
-            self.foodlist.update(dic['items'])
+            self.food_list.update(dic['items'])
 
-    def add_food(self, food, servings):
-        self.foodlist.add_food(food.name, servings)
+    def add_food(self, food, serving):
+        self.food_list.add_food(food.name, serving)
 
-    def add_recipe(self, recipe, servings):
-        self.foodlist.add_recipe(recipe.name, servings)
+    def add_recipe(self, recipe, serving):
+        self.food_list.add_recipe(recipe.name, serving)
 
     def load(self):
         with open(self.path(), mode='r') as f:
@@ -51,8 +52,8 @@ class Recipe:
         os.makedirs(os.path.dirname(self.path()), exist_ok = True)
         with open(self.path(), mode='w') as f:
             dic = {
-                'items': self.foodlist.items,
-                'servings': list(self.servings)
+                'items': self.food_list.items,
+                'servings': list(map(str, self.servings))
             }
             yaml.dump(dic, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
 

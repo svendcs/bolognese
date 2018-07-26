@@ -5,6 +5,7 @@ import subprocess
 from bolognese.constants import EDITOR
 from bolognese.core.recipe import Recipe
 from bolognese.core.food import Food
+from bolognese.core.serving import Serving
 
 def root_handle(args):
         for f in Recipe.list():
@@ -26,7 +27,7 @@ def edit_register(parent):
     parser = parent.add_parser('edit')
     parser.set_defaults(func=edit_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
-    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser.add_argument('--servings', type=Serving, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
     recipe = Recipe(args.recipe)
@@ -47,7 +48,7 @@ def add_register(parent):
     parser = parent.add_parser('add')
     parser.set_defaults(func=add_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
-    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser.add_argument('--servings', type=Serving, nargs='+', help='Set the number of foo')
 
 def copy_handle(args):
     recipe = Recipe(args.recipe)
@@ -110,6 +111,7 @@ def remove_register(parent):
 def add_food_handle(args):
     recipe = Recipe(args.recipe)
     food = Food(args.food)
+    serving = Serving.from_string(args.Serving)
     vargs = vars(args)
 
     if not recipe.exists():
@@ -122,12 +124,12 @@ def add_food_handle(args):
 
     food.load()
 
-    if not food.servings.is_valid_serving(args.serving):
+    if not food.servings.compatible(serving):
         print("The serving '{}' is not a valid serving for the given food.".format(args.serving), file=sys.stderr)
         return
 
     recipe.load()
-    recipe.add_food(food, args.serving)
+    recipe.add_food(food, serving)
     recipe.save()
 
 def add_food_register(parent):
@@ -135,11 +137,12 @@ def add_food_register(parent):
     parser.set_defaults(func=add_food_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('food', type=str, help='Set the number of foo')
-    parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
+    parser.add_argument('serving', nargs="?", type=Serving, default='1', help='Set the number of foo')
 
 def add_recipe_handle(args):
     recipe = Recipe(args.recipe)
     subrecipe = Recipe(args.subrecipe)
+    serving = Serving.from_string(args.Serving)
     vargs = vars(args)
 
     if not recipe.exists():
@@ -152,8 +155,8 @@ def add_recipe_handle(args):
 
     subrecipe.load()
 
-    if not subrecipe.servings.is_valid_serving(args.serving):
-        print("The serving '{}' is not a valid serving for the given recipe.".format(args.serving), file=sys.stderr)
+    if not subrecipe.servings.compatible(serving):
+        print("The serving '{}' is not a valid serving for the given recipe.".format(serving), file=sys.stderr)
         return
 
     recipe.load()
@@ -165,7 +168,7 @@ def add_recipe_register(parent):
     parser.set_defaults(func=add_recipe_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('subrecipe', type=str, help='Set the number of foo')
-    parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
+    parser.add_argument('serving', nargs="?", type=Serving, default='1', help='Set the number of foo')
 
 def register(parent):
     parser = parent.add_parser('recipe', help='recipe help')

@@ -1,20 +1,29 @@
+from bolognese.core.serving import Serving
+
 class FoodList:
     def __init__(self):
         self.items = []
 
-    def add_food(self, food, servings):
-        self.items.append({'food': food, 'servings': servings})
+    def add_food(self, food, serving):
+        self.items.append({'food': food.name, 'serving': str(serving)})
 
-    def add_recipe(self, recipe, servings):
-        self.items.append({'recipe': recipe, 'servings': servings})
+    def add_recipe(self, recipe, serving):
+        self.items.append({'recipe': recipe.name, 'serving': str(serving)})
 
     def update(self, items):
-        assert(isinstance(items, list))
-        for item in items:
-            assert(isinstance(item, dict))
-            assert('servings' not in item or isinstance(item['servings'], str) or isinstance(item['servings'], int))
+        if not isinstance(items, list):
+            raise Exception('The loaded food list is not a list.')
 
-            t = 'food' if 'food' in item else 'recipe'
-            assert(t in item)
-            assert(isinstance(item[t], str))
-            self.items.append({t: item[t], 'servings': item['servings'] if 'servings' in item else 1})
+        for item in items:
+            if not isinstance(item, dict):
+                raise Exception('The loaded food list contains an invalid item.')
+            serving = Serving.from_string(item['serving'] if 'serving' in item else '1')
+
+            if not ('food' in item or 'recipe' in item):
+                raise Exception('The loaded food list contains an invalid item.')
+
+            if 'food' in item:
+                self.items.append({'food': item['food'], 'serving': str(serving)})
+            else:
+                self.items.append({'recipe': item['serving'], 'serving': str(serving)})
+

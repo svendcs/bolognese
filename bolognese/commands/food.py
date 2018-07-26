@@ -3,6 +3,7 @@ import subprocess
 
 from bolognese.constants import EDITOR
 from bolognese.core.food import Food
+from bolognese.core.serving import Serving
 from bolognese.core.nutrients import Nutrients
 
 def root_handle(args):
@@ -27,7 +28,7 @@ def edit_register(parent):
     for nutr in Nutrients.NUTRIENTS:
         parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
     parser.set_defaults(func=edit_handle)
-    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser.add_argument('--servings', type=Serving, nargs='+', help='Set the number of foo')
 
 def add_handle(args):
     food = Food(args.food)
@@ -50,7 +51,7 @@ def add_register(parent):
     parser.add_argument('food', type=str, help='Set the number of foo')
     for nutr in Nutrients.NUTRIENTS:
         parser.add_argument('--{}'.format(nutr), type=float, help='Set the number of {}'.format(nutr))
-    parser.add_argument('--servings', type=str, nargs='+', help='Set the number of foo')
+    parser.add_argument('--servings', type=Serving, nargs='+', help='Set the number of foo')
 
 def copy_handle(args):
     food = Food(args.food)

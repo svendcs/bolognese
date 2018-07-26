@@ -4,12 +4,14 @@ import yaml
 from bolognese.constants import DIARY_DIR, EXTENSION
 from datetime import date
 from bolognese.core.food_list import FoodList
-from bolognese.core.servings import Servings
+from bolognese.core.food import Food
+from bolognese.core.recipe import Recipe
+from bolognese.core.serving import Serving
 
 class Diary:
     def __init__(self, date: date):
         self.date = date
-        self.foodlist = FoodList()
+        self.food_list = FoodList()
 
     def path(self):
         return os.path.join(DIARY_DIR, str(self.date) + EXTENSION)
@@ -17,30 +19,31 @@ class Diary:
     def exists(self):
         return os.path.isfile(self.path())
 
-    def add_food(self, food, servings):
-        self.foodlist.add_food(food.name, servings)
+    def add_food(self, food, serving):
+        self.food_list.add_food(food, serving)
 
-    def add_recipe(self, recipe, servings, recursive = False):
+    def add_recipe(self, recipe, serving, recursive = False):
         if not recursive:
-            self.foodlist.add_recipe(recipe.name, servings)
+            self.food_list.add_recipe(recipe, serving)
         else:
-            factor = recipe.servings.get_factor(servings)
-            for item in recipe.foodlist.items:
-                serving = item['servings'] if 'servings' in item else 1
-                new_serving = Servings.apply_factor(serving, factor)
+            factor = recipe.servings.get_factor(serving)
+            for item in recipe.food_list.items:
+                serving = Serving.from_string(item['serving']) if 'serving' in item else Serving('', 1)
+                new_serving = factor * serving
+                print(serving, new_serving)
                 if 'food' in item:
-                    self.foodlist.add_food(item['food'], new_serving)
+                    self.food_list.add_food(Food(item['food']), new_serving)
                 else:
-                    self.foodlist.add_recipe(item['recipe'], new_serving)
+                    self.food_list.add_recipe(Recipe(item['recipe']), new_serving)
 
     def update(self, items):
         assert(isinstance(items, list))
-        self.foodlist.update(items)
+        self.food_list.update(items)
 
     def load(self):
         with open(self.path(), mode='r') as f:
-            self.foodlist.update(yaml.safe_load(f) or {})
+            self.food_list.update(yaml.safe_load(f) or [])
 
     def save(self):
         with open(self.path(), mode='w') as f:
-            yaml.dump(self.foodlist.items, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
+            yaml.dump(self.food_list.items, f, default_flow_style=False, encoding='utf-8', allow_unicode=True)
