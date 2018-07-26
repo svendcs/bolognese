@@ -126,8 +126,8 @@ def import_register(parent):
     import_parser = parent.add_parser('import')
     import_parser.set_defaults(func=import_handle)
     # import_parser.add_argument('database', type=str, choices=['fooddata'], help='Set the number of foo')
-    import_parser.add_argument('food_id', type=str, help='Set the number of foo')
     import_parser.add_argument('food', type=str, help='Set the number of foo')
+    import_parser.add_argument('food_id', type=str, help='Set the number of foo')
 
 def list_handle(args):
     for f in Food.list():
