@@ -7,10 +7,6 @@ from bolognese.core.recipe import Recipe
 from bolognese.core.food import Food
 from bolognese.core.serving import Serving
 
-def root_handle(args):
-        for f in Recipe.list():
-            print(f)
-
 def edit_handle(args):
     recipe = Recipe(args.recipe)
     vargs = vars(args)
@@ -170,9 +166,16 @@ def add_recipe_register(parent):
     parser.add_argument('subrecipe', type=str, help='Set the number of foo')
     parser.add_argument('serving', nargs="?", type=Serving, default='1', help='Set the number of foo')
 
+def list_handle(args):
+    for r in Recipe.list():
+        print(r)
+
+def list_register(parent):
+    import_parser = parent.add_parser('list')
+    import_parser.set_defaults(func=list_handle)
+
 def register(parent):
     parser = parent.add_parser('recipe', help='recipe help')
-    parser.set_defaults(func=root_handle)
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)
@@ -182,4 +185,5 @@ def register(parent):
     remove_register(subparsers)
     add_food_register(subparsers)
     add_recipe_register(subparsers)
+    list_register(subparsers)
 

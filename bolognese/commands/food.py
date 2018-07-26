@@ -7,8 +7,7 @@ from bolognese.core.serving import Serving
 from bolognese.core.nutrients import Nutrients
 
 def root_handle(args):
-    for f in Food.list():
-        print(f)
+    pass
 
 def edit_handle(args):
     food = Food(args.food)
@@ -130,9 +129,16 @@ def import_register(parent):
     import_parser.add_argument('food_id', type=str, help='Set the number of foo')
     import_parser.add_argument('food', type=str, help='Set the number of foo')
 
+def list_handle(args):
+    for f in Food.list():
+        print(f)
+
+def list_register(parent):
+    import_parser = parent.add_parser('list')
+    import_parser.set_defaults(func=list_handle)
+
 def register(parent):
     parser = parent.add_parser('food', help='food help')
-    parser.set_defaults(func=root_handle)
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)
@@ -140,5 +146,6 @@ def register(parent):
     move_register(subparsers)
     remove_register(subparsers)
     import_register(subparsers)
+    list_register(subparsers)
     add_register(subparsers)
 

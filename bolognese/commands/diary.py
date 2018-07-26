@@ -42,9 +42,6 @@ def get_totals(foodlist, foods = {}, recipes = {}):
 
     return total
 
-def root_handle(args):
-    pass
-
 def parse_date(s):
     prog = re.compile("(\d{4})[-.](\d{2})[-.](\d{2})")
 
@@ -168,7 +165,6 @@ def add_recipe_register(parent):
 
 def register(parent):
     parser = parent.add_parser('diary', help='diary help')
-    parser.set_defaults(func=root_handle)
     subparsers = parser.add_subparsers(help='subsub parser help')
 
     edit_register(subparsers)

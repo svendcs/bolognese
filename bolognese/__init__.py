@@ -5,7 +5,7 @@ import bolognese.constants
 from bolognese.commands import food,config,recipe,diary
 
 def __handle(args):
-    print("Root handle")
+    pass
 
 def main():
     parser = argparse.ArgumentParser(prog='bolognese')
