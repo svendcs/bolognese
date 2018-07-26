@@ -2,6 +2,10 @@ Bolognese
 =========
 Bolognese is a command line tool for tracking macro nutrients.
 
+Installation
+------------
+TODO
+
 Configuration
 -------------
 Bolognese stores all food diaries, recipes, foods and configuration in `json`-format in the `$HOME/.config/bolognese` directory. All files can be managed using the `bolognese` command, but can also be edited manually.
@@ -63,3 +67,6 @@ The daily food diaries are stored in the `$HOME/.config/bolognese/config.yml` di
 Usage
 -----
 Bolognese is terminal based. The arguments can be explored by running `bolognese --help`.
+
+### Example workflow
+TODO
