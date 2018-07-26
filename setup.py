@@ -15,7 +15,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='bolognese',
-    version='0.1.0.dev1',
+    version='0.9.0',
     description='Command line tool for tracking macro nutrients.',
     long_description=long_description,
     url='https://github.com/svendcsvendsen/bolognese',
