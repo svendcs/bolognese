@@ -36,10 +36,10 @@ class Recipe:
             self.food_list.update(dic['items'])
 
     def add_food(self, food, serving):
-        self.food_list.add_food(food.name, serving)
+        self.food_list.add_food(food, serving)
 
     def add_recipe(self, recipe, serving):
-        self.food_list.add_recipe(recipe.name, serving)
+        self.food_list.add_recipe(recipe, serving)
 
     def load(self):
         with open(self.path(), mode='r') as f:

@@ -107,7 +107,7 @@ def remove_register(parent):
 def add_food_handle(args):
     recipe = Recipe(args.recipe)
     food = Food(args.food)
-    serving = Serving.from_string(args.Serving)
+    serving = Serving.from_string(args.serving)
     vargs = vars(args)
 
     if not recipe.exists():
@@ -121,7 +121,7 @@ def add_food_handle(args):
     food.load()
 
     if not food.servings.compatible(serving):
-        print("The serving '{}' is not a valid serving for the given food.".format(args.serving), file=sys.stderr)
+        print("The serving '{}' is not a valid serving for the given food.".format(serving), file=sys.stderr)
         return
 
     recipe.load()
@@ -133,12 +133,12 @@ def add_food_register(parent):
     parser.set_defaults(func=add_food_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('food', type=str, help='Set the number of foo')
-    parser.add_argument('serving', nargs="?", type=Serving, default='1', help='Set the number of foo')
+    parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
 
 def add_recipe_handle(args):
     recipe = Recipe(args.recipe)
     subrecipe = Recipe(args.subrecipe)
-    serving = Serving.from_string(args.Serving)
+    serving = Serving.from_string(args.serving)
     vargs = vars(args)
 
     if not recipe.exists():
@@ -156,7 +156,7 @@ def add_recipe_handle(args):
         return
 
     recipe.load()
-    recipe.add_recipe(subrecipe, args.serving)
+    recipe.add_recipe(subrecipe, serving)
     recipe.save()
 
 def add_recipe_register(parent):
@@ -164,7 +164,7 @@ def add_recipe_register(parent):
     parser.set_defaults(func=add_recipe_handle)
     parser.add_argument('recipe', type=str, help='Set the number of foo')
     parser.add_argument('subrecipe', type=str, help='Set the number of foo')
-    parser.add_argument('serving', nargs="?", type=Serving, default='1', help='Set the number of foo')
+    parser.add_argument('serving', nargs="?", type=str, default='1', help='Set the number of foo')
 
 def list_handle(args):
     for r in Recipe.list():

@@ -23,3 +23,7 @@ class ServingList:
             return serving / other
         raise Exception("Tried to get factor of non-compatible serving to serving list.")
 
+    def __iter__(self):
+        for serving in self.servings:
+            yield serving
+
