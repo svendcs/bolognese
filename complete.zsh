@@ -1,4 +1,4 @@
-#compdef bolognese
+#compdef _bolognese bolognese
 
 _bolognese() {
     local line
