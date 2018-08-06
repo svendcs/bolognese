@@ -25,5 +25,5 @@ class FoodList:
             if 'food' in item:
                 self.items.append({'food': item['food'], 'serving': str(serving)})
             else:
-                self.items.append({'recipe': item['serving'], 'serving': str(serving)})
+                self.items.append({'recipe': item['recipe'], 'serving': str(serving)})
 

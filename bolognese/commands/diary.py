@@ -11,10 +11,10 @@ from bolognese.core.nutrients import Nutrients
 from bolognese.core.config import Config
 from bolognese.core.serving import Serving
 
-def get_totals(foodlist, foods = {}, recipes = {}):
+def get_totals(food_list, foods = {}, recipes = {}):
     total = Nutrients()
 
-    for item in foodlist.items:
+    for item in food_list.items:
         serving = Serving.from_string(item['serving'] if 'serving' in item else '1')
         if 'recipe' in item:
             recipe_name = item['recipe']
@@ -26,7 +26,7 @@ def get_totals(foodlist, foods = {}, recipes = {}):
             else:
                 recipe = recipes[recipe_name]
             factor = recipe.servings.get_factor(serving)
-            child_total = factor * get_totals(recipe.foodlist, foods, recipes)
+            child_total = factor * get_totals(recipe.food_list, foods, recipes)
         if 'food' in item:
             food_name = item['food']
             if food_name not in foods:
