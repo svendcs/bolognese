@@ -1,8 +1,6 @@
-#!/bin/zsh
+#compdef bolognese
 
-compdef _bolognese bolognese
-
-function _bolognese {
+_bolognese() {
     local line
 
     _arguments -C \
@@ -27,7 +25,7 @@ function _bolognese {
     esac
 }
 
-function _bolognese_config {
+_bolognese_config() {
     _arguments \
         "-h" \
         "--help" \
@@ -41,7 +39,7 @@ function _bolognese_config {
         "--sodium"
 }
 
-function _bolognese_food {
+_bolognese_food() {
     local line
 
     _arguments -C \
@@ -73,7 +71,7 @@ function _bolognese_food {
     esac
 }
 
-function _bolognese_food_edit {
+_bolognese_food_edit() {
     foods=$(bolognese food list)
     _arguments \
         "1: :($foods)" \
@@ -89,7 +87,7 @@ function _bolognese_food_edit {
         "--sodium"
 }
 
-function _bolognese_food_move {
+_bolognese_food_move() {
     foods=$(bolognese food list)
     _arguments \
         "-h" \
@@ -98,7 +96,7 @@ function _bolognese_food_move {
         "2: :($foods)"
 }
 
-function _bolognese_food_remove {
+_bolognese_food_remove() {
     foods=$(bolognese food list)
     _arguments \
         "-h" \
@@ -106,13 +104,13 @@ function _bolognese_food_remove {
         "1: :($foods)"
 }
 
-function _bolognese_food_list {
+_bolognese_food_list() {
     _arguments \
         "-h" \
         "--help"
 }
 
-function _bolognese_food_import {
+_bolognese_food_import() {
     foods=$(bolognese food list)
     _arguments \
         "-h" \
@@ -121,7 +119,7 @@ function _bolognese_food_import {
         "2:" \
 }
 
-function _bolognese_recipe {
+    _bolognese_recipe() {
     local line
 
     _arguments -C \
@@ -156,7 +154,7 @@ function _bolognese_recipe {
     esac
 }
 
-function _bolognese_recipe_edit {
+_bolognese_recipe_edit() {
     recipes=$(bolognese recipe list)
     _arguments \
         "1: :($recipes)" \
@@ -165,7 +163,7 @@ function _bolognese_recipe_edit {
         "--servings"
 }
 
-function _bolognese_recipe_move {
+_bolognese_recipe_move() {
     recipes=$(bolognese recipe list)
     _arguments \
         "-h" \
@@ -174,7 +172,7 @@ function _bolognese_recipe_move {
         "2: :($recipes)"
 }
 
-function _bolognese_recipe_remove {
+_bolognese_recipe_remove() {
     recipes=$(bolognese recipe list)
     _arguments \
         "-h" \
@@ -182,13 +180,13 @@ function _bolognese_recipe_remove {
         "1: :($recipes)"
 }
 
-function _bolognese_recipe_list {
+_bolognese_recipe_list() {
     _arguments \
         "-h" \
         "--help"
 }
 
-function _bolognese_recipe_add_food {
+_bolognese_recipe_add_food() {
     foods=$(bolognese food list)
     recipes=$(bolognese recipe list)
     _arguments \
@@ -199,7 +197,7 @@ function _bolognese_recipe_add_food {
         "3: "
 }
 
-function _bolognese_recipe_add_recipe {
+_bolognese_recipe_add_recipe() {
     recipes=$(bolognese recipe list)
     _arguments \
         "-h" \
@@ -209,7 +207,7 @@ function _bolognese_recipe_add_recipe {
         "3:"
 }
 
-function _bolognese_diary {
+_bolognese_diary() {
     local line
 
     _arguments -C \
@@ -232,14 +230,14 @@ function _bolognese_diary {
     esac
 }
 
-function _bolognese_diary_edit {
+_bolognese_diary_edit() {
     _arguments \
         "-h" \
         "--help" \
         "--date"
 }
 
-function _bolognese_diary_add_food {
+_bolognese_diary_add_food() {
     foods=$(bolognese food list)
     _arguments \
         "-h" \
@@ -250,7 +248,7 @@ function _bolognese_diary_add_food {
         "--recursive"
 }
 
-function _bolognese_diary_add_recipe {
+_bolognese_diary_add_recipe() {
     recipes=$(bolognese recipe list)
     _arguments \
         "-h" \
