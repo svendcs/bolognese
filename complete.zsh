@@ -43,6 +43,8 @@ _bolognese_food() {
     local line
 
     _arguments -C \
+        "-h" \
+        "--help" \
         "1: :(edit copy move remove import list add)" \
         "*::arg:->args"
 
@@ -123,6 +125,8 @@ _bolognese_food_import() {
     local line
 
     _arguments -C \
+        "-h" \
+        "--help" \
         "1: :(edit copy move remove list add add-food add-recipe)" \
         "*::arg:->args"
 
@@ -211,6 +215,8 @@ _bolognese_diary() {
     local line
 
     _arguments -C \
+        "-h" \
+        "--help" \
         "1: :(edit show add-food add-recipe)" \
         "*::arg:->args"
 
@@ -253,6 +259,7 @@ _bolognese_diary_add_recipe() {
     _arguments \
         "-h" \
         "--help" \
+        "--recursive" \
         "1: :($recipes)" \
         "2: " \
         "--date"
