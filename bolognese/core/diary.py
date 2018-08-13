@@ -30,7 +30,6 @@ class Diary:
             for item in recipe.food_list.items:
                 serving = Serving.from_string(item['serving']) if 'serving' in item else Serving('', 1)
                 new_serving = factor * serving
-                print(serving, new_serving)
                 if 'food' in item:
                     self.food_list.add_food(Food(item['food']), new_serving)
                 else:
